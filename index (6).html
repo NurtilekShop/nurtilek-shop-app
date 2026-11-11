@@ -1,0 +1,288 @@
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Nurtilek Shop</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Lora:wght@600;700&family=JetBrains+Mono:wght@400&display=swap">
+<style>
+:root{color-scheme:dark;--bg:#080807;--card:#12110f;--line:#2e2718;--gold:#e2b957;--gold2:#a8832f;--fg:#f1ece0;--mut:#9a9486;--ok:#3ddc97;--bad:#ff6b6b;--serif:'Lora',Georgia,serif;--sans:'Inter',system-ui,sans-serif;--mono:'JetBrains Mono',ui-monospace,monospace}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--fg);font:14px/1.4 var(--sans);padding:env(safe-area-inset-top,0) max(16px,env(safe-area-inset-right,0)) 0 max(16px,env(safe-area-inset-left,0))}
+img{max-width:100%}[hidden]{display:none!important}
+#app{max-width:520px;margin:0 auto;height:100%;display:flex;flex-direction:column}
+#view{flex:1;overflow-y:auto;padding:12px 0 24px;min-height:0}
+.chips{display:flex;gap:6px;flex-wrap:wrap;align-items:center;padding:10px 0;border-bottom:1px solid var(--line);font-size:12px}
+.chip{border:1px solid var(--line);background:#16130b;color:var(--gold);padding:4px 8px;border-radius:7px}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--ok)}
+h1,h2{font-family:var(--serif);margin:0}h1{font-size:26px}h2{font-size:22px}
+.sub{color:var(--mut);margin:4px 0 14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:14px;margin-bottom:12px}
+.row{display:flex;align-items:center;justify-content:space-between;gap:10px}.row>*{min-width:0}
+.btn{background:linear-gradient(135deg,#f0cf7d,var(--gold2));color:#1a1405;border:0;border-radius:12px;padding:12px 16px;font:600 14px var(--sans);cursor:pointer}
+.btn.big{width:100%;padding:16px;font-size:15px}
+.ghost{background:transparent;color:var(--gold);border:1px solid var(--gold2);border-radius:12px;padding:8px 14px;font:500 13px var(--sans);cursor:pointer}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.game{background:var(--card);border:1px solid var(--line);border-radius:18px;overflow:hidden;cursor:pointer;text-align:left;color:inherit;padding:0;font:inherit}
+.cover{height:96px;position:relative;display:flex;align-items:flex-end;padding:8px;font-family:var(--serif);font-size:18px;background-size:cover;background-position:center}
+.cover.lg{height:150px;border-radius:18px;border:1px solid var(--line);margin-bottom:12px;font-size:24px;padding:14px;overflow:hidden}
+.gb{padding:10px 12px}.gb b{display:block;font-weight:600}.gb small{color:var(--mut)}
+.gb .p{border-top:1px solid var(--line);margin-top:8px;padding-top:8px;display:flex;justify-content:space-between;font-size:12px}
+.gb .p span:first-child{color:var(--gold);font-weight:600}
+.pills{display:flex;gap:8px;overflow-x:auto;margin-bottom:12px;padding-bottom:2px}
+.pill{white-space:nowrap;border:1px solid var(--line);background:var(--card);color:var(--mut);padding:9px 16px;border-radius:999px;cursor:pointer;font:500 14px var(--sans)}
+.pill.on{border-color:var(--gold);color:var(--gold);background:#1d1707}
+.item{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:10px;cursor:pointer;color:inherit;text-align:left;font:inherit}
+.pimg{height:84px;border-radius:12px;background:#0b0a08 center/cover;border:1px solid var(--line);display:grid;place-items:center;color:var(--gold2);font-size:26px;margin-bottom:8px}
+.item .old{text-align:right;color:var(--mut);text-decoration:line-through;font-size:12px;min-height:16px}
+.item .nm{font-weight:600;margin:4px 0 10px}
+.item .ft{border-top:1px solid var(--line);padding-top:8px;display:flex;justify-content:space-between;align-items:center}
+.buy{background:#241c08;color:var(--gold);border-radius:6px;padding:3px 8px;font-size:12px}
+.gold{color:var(--gold);font-family:var(--serif);font-weight:700}
+input[type=text],input:not([type]),input[type=number]{width:100%;background:#0b0a08;border:1px solid var(--line);color:var(--fg);border-radius:12px;padding:12px;font:15px var(--sans)}
+label{display:block;font-weight:600;margin-bottom:8px}
+.badge{border-radius:999px;padding:5px 12px;font-size:13px;border:1px solid;white-space:nowrap}
+.b-ok{color:var(--ok);border-color:#1d5a40;background:#0b1e17}.b-wait{color:var(--gold);border-color:var(--gold2);background:#1d1707}
+.mono{font-family:var(--mono)}.stars{color:var(--gold);letter-spacing:2px}
+.hero{background:linear-gradient(160deg,#241c08,#0f0d08);border:1px solid var(--gold2);border-radius:20px;padding:18px;margin-bottom:12px}
+.tag{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:5px 12px;font-size:12px;margin-bottom:10px}
+.mini{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}
+.mini div{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 6px;text-align:center;font-size:12px}
+.mini b{display:block;font-size:13px}.mini span{color:var(--mut)}
+.toast{position:fixed;left:50%;bottom:96px;transform:translateX(-50%);background:var(--gold);color:#1a1405;padding:10px 16px;border-radius:12px;font-weight:600;max-width:90%;z-index:9}
+.avatar{width:64px;height:64px;border:2px solid var(--gold2);border-radius:50%;display:grid;place-items:center;font:700 30px var(--serif);color:var(--gold);background:#16130b center/cover;position:relative;flex:none;overflow:visible}
+.avatar .cam{position:absolute;right:-4px;bottom:-4px;width:24px;height:24px;border-radius:50%;background:var(--gold);color:#1a1405;display:grid;place-items:center;font-size:12px;border:2px solid var(--bg)}
+.up{display:flex;align-items:center;gap:6px;cursor:pointer}
+.thumb{width:48px;height:48px;border-radius:10px;border:1px dashed var(--gold2);flex:none;background:#0b0a08 center/cover;display:grid;place-items:center;color:var(--gold);cursor:pointer;font-size:18px}
+.adm{display:flex;align-items:center;gap:10px}
+.tgbox{text-align:center;background:linear-gradient(160deg,#241c08,#0f0d08);border:1px solid var(--gold2);border-radius:22px;padding:22px 16px;margin-bottom:12px}
+.tgico{width:84px;height:84px;margin:0 auto 12px;border-radius:50%;border:2px solid var(--gold2);background:#1d1707 center/cover;display:grid;place-items:center;font-size:42px;box-shadow:0 0 24px #e2b95733}
+.rate{display:inline-block;border:1px solid var(--line);border-radius:14px;padding:10px 18px;margin-top:10px;color:var(--mut)}.rate b{color:var(--fg);font-size:17px}
+input[type=range]{width:100%;accent-color:var(--gold);height:28px}
+.pre{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:12px 0}
+.pre button{background:#0b0a08;border:1px solid var(--line);border-radius:14px;color:var(--fg);padding:14px 0;font:600 15px var(--sans);cursor:pointer}
+.pre button.on{border-color:var(--gold);color:var(--gold)}
+/* bottom nav */
+nav{display:flex;margin:0 -8px 8px;padding:6px 6px;border:1px solid var(--line);border-radius:24px;background:rgba(20,18,13,.88);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:0 8px 28px #000a,inset 0 1px 0 #ffffff0d;margin-bottom:max(8px,env(safe-area-inset-bottom,0))}
+nav button{flex:1;min-width:0;background:none;border:0;color:var(--mut);padding:8px 0 6px;font:500 11px var(--sans);cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px;position:relative;border-radius:18px;transition:color .2s,background .2s}
+nav button svg{width:23px;height:23px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+nav button.on{color:var(--gold);background:linear-gradient(180deg,#2a2109,#1a1407);box-shadow:inset 0 0 0 1px #a8832f55}
+nav button.on svg{filter:drop-shadow(0 0 5px #e2b95788)}
+nav b{position:absolute;top:2px;right:calc(50% - 22px);background:#ff4d4d;color:#fff;border-radius:999px;font:600 10px var(--sans);min-width:16px;height:16px;display:grid;place-items:center;padding:0 4px;border:2px solid #14120d}
+</style></head><body>
+<div id="app">
+  <div class="chips"><span class="dot"></span><span>Telegram WebApp</span><span class="chip">KGS 🇰🇬</span><span class="chip" id="chipAdmin">Админ: ВКЛ</span><span class="chip">RU</span></div>
+  <div id="view"></div>
+  <nav id="nav"></nav>
+</div>
+<script>
+const SRV=['Asia','America','Europe','TW/HK/MO'];
+const G=[
+{id:'ff',n:'Free Fire',s:'Алмазы, ваучеры, пропуска',ic:'💎',f:'uid',lbl:'UID Free Fire *',bg:'linear-gradient(120deg,#16171f,#1b2a6b 60%,#0b0b12)',items:{
+ 'Алмазы':[['110 алмазов',75],['341 алмаз',228],['572 алмаза',370],['1166 алмазов',745],['2398 алмазов',1459],['6160 алмазов',3702]],
+ 'Ваучеры':[['Lite Ваучер (90💎)',39,0,'Сразу после покупки начисляется 20 алмазов, и 7 дней вы будете получать по 10 алмазов.'],['Ваучер на неделю (450💎)',149,0,'Сразу 100 алмазов, затем 7 дней подряд по 50 алмазов.'],['Ваучер на месяц (2600💎)',532,0,'Сразу 500 алмазов, затем 30 дней по 70 алмазов.']],
+ 'Пропуска':[['Пропуск прокачки 6 lvl',65,0,'💎 В игре: 120'],['Пропуск прокачки 10 lvl',89,0,'💎 В игре: 200'],['Пропуск прокачки 15 lvl',89,0,'💎 В игре: 200'],['Пропуск прокачки 20 lvl',89,0,'💎 В игре: 200'],['Пропуск прокачки 25 lvl',89,0,'💎 В игре: 200'],['Пропуск прокачки 30 lvl',120,0,'💎 В игре: 350']]}},
+{id:'pubg',n:'PUBG Mobile',s:'UC, Prime и Prime+',ic:'🪙',f:'uid',lbl:'PUBG ID *',bg:'linear-gradient(120deg,#ff2d95,#3d1bd6 55%,#0b0b12)',items:{
+ 'UC':[['60 UC',89],['325 UC',439],['660 UC',889],['1800 UC',2200],['3850 UC',4300],['8100 UC',8500]],
+ 'Prime':[['Prime 1 месяц',89],['Prime 3 месяца',270],['Prime 6 месяцев',550],['Prime 12 месяцев',1090]],
+ 'Prime+':[['Prime+ 1 месяц',899],['Prime+ 3 месяца',2600],['Prime+ 6 месяцев',5150],['Prime+ 12 месяцев',10500]]}},
+{id:'ml',n:'Mobile Legends',s:'Алмазы и пассы',ic:'💎',f:'ml',bg:'linear-gradient(120deg,#0a3b6b,#1ea7c8 60%,#0b0b12)',items:{
+ 'Алмазы':[['20+2 Diamonds',60],['78+8 Diamonds',122],['156+16 Diamonds',245],['170 Diamonds',306],['234+23 Diamonds',366],['240 Diamonds',445],['296 Diamonds',537],['504+66 Diamonds',950],['625+81 Diamonds',984],['1860+335 Diamonds',2942],['2010 Diamonds',3371],['3099+589 Diamonds',4904],['4649+883 Diamonds',7381]],
+ 'Пассы':[['Weekly Elite Bundle',85],['Weekly Pass',155],['Monthly Elite Pack',397],['Twilight Pass',808]]}},
+{id:'cod',n:'Call of Duty Mobile',s:'CP (Регион Казахстан)',ic:'🎯',f:'uid',lbl:'ID Call of Duty Mobile (Казахстан) *',bg:'linear-gradient(120deg,#e8e4da,#f2c23a 60%,#2a5bd6)',items:{'CP':[['80 + 8 CP',130],['400 + 60 CP',572],['800 + 160 CP',1199],['2000 + 600 CP',2770],['4000 + 1400 CP',5410]]}},
+{id:'gi',n:'Genshin Impact',s:'Genesis Crystals и Welkin Moon',ic:'✨',f:'uid',lbl:'UID Genshin Impact *',bg:'linear-gradient(120deg,#2a2112,#3b2f12)',items:{'Кристаллы':[['60 Genesis Crystals',105],['300 + 30 Genesis Crystals',545],['Blessing of the Welkin Moon',550],['980 + 110 Genesis Crystals',1599],['1980 + 260 Genesis Crystals',3195],['3280 + 600 Genesis Crystals',5386],['6480 + 1600 Genesis Crystals',10999]]}},
+{id:'hsr',n:'Honkai: Star Rail',s:'Осколки и пропуск экспресса',ic:'🚂',f:'srv',bg:'linear-gradient(120deg,#1a1440,#5b3fd1 60%,#0b0b12)',items:{
+ 'Осколки':[['60 Осколков',104],['300+30 Осколков',504],['980+110 Осколков',1378],['1980+260 Осколков',2623],['3280+600 Осколков',4555],['6480+1600 Осколков',9155]],
+ 'Пропуск':[['Пропуск снабжения экспресса',504]]}},
+{id:'ab',n:'Arena Breakout',s:'Облигации и наборы',ic:'🪖',f:'uid',bg:'linear-gradient(120deg,#1d2418,#4b5a2c 60%,#0b0b12)',items:{
+ 'Облигации':[['66 облигаций',86],['335 облигаций',409],['675 облигаций',809],['1690 облигаций',2001],['3400 облигаций',3971],['6820 облигаций',7850]],
+ 'Наборы':[['Набор новичка',78],['Расширенный ежемесячный БП',96],['Пуленепробиваемый ящик + привилегии (30 дней)',234],['Премиальный ежемесячный БП',367],['Композитный ящик + привилегии (30 дней)',685],['Ежеквартальный набор пропусков',1075]]}},
+{id:'mr',n:'Marvel Rivals',s:'Lattices',ic:'🦸',f:'uid',bg:'linear-gradient(120deg,#6b0f1a,#c62a2a 60%,#0b0b12)',items:{'Lattices':[['100 Lattices',101],['500 Lattices',501],['1000 Lattices',960],['2180 Lattices',1809],['5680 Lattices',4650],['11680 Lattices',9650]]}},
+{id:'ox',n:'Oxide Survival Island',s:'Монеты и Elite',ic:'🏝',f:'uid',bg:'linear-gradient(120deg,#0d3b3b,#2a8f7a 60%,#0b0b12)',items:{
+ 'Монеты':[['50 Монет',236],['135 Монет',583],['290 Монет (15% Выгоды)',1154],['630 Монет (25% Выгоды)',2284],['1675 Монет (30% Выгоды)',5606],['3550 Монет (40% Выгоды)',11113]],
+ 'Пропуск':[['Elite + Боевой пропуск',1604]]}},
+{id:'tg',n:'Telegram',s:'Stars и Premium',ic:'⭐',f:'tgu',from:85,bg:'linear-gradient(120deg,#ff8a3d,#8b3dff 55%,#12b5ff)',items:{'Stars':[],'Premium':[['Premium 3 месяца',1260],['Premium 6 месяцев',1700],['Premium 12 месяцев',2999]]}},
+{id:'dc',n:'Discord',s:'Nitro и Basic',ic:'💬',f:'none',bg:'linear-gradient(120deg,#1b1f3a,#2b3170)',items:{'Nitro':[['Discord Basic — 1 месяц',491],['Discord Nitro — 1 месяц',982],['Discord Nitro — 12 месяцев',9350]]}},
+{id:'st',n:'Steam',s:'Пополнение кошелька в USD',ic:'🎮',f:'steam',from:20,bg:'linear-gradient(120deg,#16202c,#1d2c3d)',items:{'Курс':[['Курс: сом за $1',98]]}}];
+const TG_RATE=1.7,TG_MIN=50,TG_MAX=5000;
+const minP=g=>g.from||Math.min(...Object.values(g.items).flat().map(p=>p[1]));
+const steamRate=()=>G.find(g=>g.id==='st').items['Курс'][0][1];
+const ST_MIN=0.2,ST_MAX=1000;
+let steamAmt=5,srv=null;
+const orders=[
+{no:1042,g:'Free Fire: 💎 572 алмаза',d:'UID: 284910284  Ник: ★Nurt1lek_Pro★',p:409,st:'ok',rv:true},
+{no:1041,g:'Free Fire: 🔹 Ваучер на неделю (450💎)',d:'UID: 284910284  Ник: ★Nurt1lek_Pro★',p:160,st:'ok'},
+{no:1040,g:'PUBG Mobile: 325 UC',d:'PUBG ID: 5192847291  Ник: KyrgyzSniper_01',p:439,st:'wait'},
+{no:1039,g:'Telegram Stars: 250 ⭐',d:'Username: @nurtilek_vip  Stars: 250',p:425,st:'ok'}];
+const reviews=[
+['Айбек','ID 4829 • • • 76','купил на 3 200 сом','Сегодня, 14:20','Алмазы во Free Fire пришли через минуту! Всё честно и моментально. Беру уже третий раз, лучший шоп в КР 🇰🇬'],
+['Мээрим','ID 1105 • • • 42','купил на 830 сом','Вчера, 19:45','Очень удобный мини-апп! Оплатила через MBank за пару секунд, ваучер сразу активировался. Рахмат!'],
+['Эрлан','ID 7731 • • • 08','купил на 450 сом','2 дня назад','Всё четко! Брали UC для PUBG с друзьями, пришли сразу на ID без паролей от аккаунта.'],
+['Данияр','ID 9012 • • • 55','купил на 5 400 сом','3 дня назад','Брал Genesis Crystals в Genshin Impact на регион Азия — начислили без задержек. Рекомендую!']];
+
+/* ---- images (stored in localStorage when possible) ---- */
+let IM={};try{IM=JSON.parse(localStorage.getItem('nt_img')||'{}')}catch(e){}
+function saveIM(){try{localStorage.setItem('nt_img',JSON.stringify(IM))}catch(e){toast('Фото слишком большое для сохранения, но оно показано')}}
+const pk=(g,p)=>'p:'+g.id+'|'+p[0];
+const bgi=k=>IM[k]?`background-image:url(${IM[k]})`:'';
+function pick(key,done){const f=document.createElement('input');f.type='file';f.accept='image/*';
+ f.onchange=()=>{const file=f.files[0];if(!file)return;const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{const m=480,s=Math.min(1,m/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=im.width*s;c.height=im.height*s;c.getContext('2d').drawImage(im,0,0,c.width,c.height);IM[key]=c.toDataURL('image/jpeg',.85);saveIM();toast('Фото загружено ✓');done()};im.src=r.result};r.readAsDataURL(file)};f.click()}
+function delImg(key,done){delete IM[key];saveIM();done()}
+
+const ICONS={
+home:'<path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10v9.5a1 1 0 0 0 1 1H10v-5.5h4v5.5h3.5a1 1 0 0 0 1-1V10"/>',
+rev:'<path d="m12 3.5 2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.8 6.8 19.6l1-5.8L3.5 9.7l5.9-.9z"/>',
+ord:'<path d="M12 3 4 7v10l8 4 8-4V7z"/><path d="m4 7 8 4 8-4M12 11v10"/>',
+prof:'<circle cx="12" cy="8" r="3.6"/><path d="M4.8 20c.7-3.7 3.5-5.7 7.2-5.7s6.5 2 7.2 5.7"/>',
+adm:'<circle cx="12" cy="12" r="3"/><path d="M19.4 14.5a1.6 1.6 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.6 1.6 0 0 0-1.8-.3 1.6 1.6 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.6 1.6 0 0 0-1-1.5 1.6 1.6 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.6 1.6 0 0 0 .3-1.8 1.6 1.6 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.6 1.6 0 0 0 1.5-1 1.6 1.6 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.6 1.6 0 0 0 1.8.3h0a1.6 1.6 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.6 1.6 0 0 0 1 1.5 1.6 1.6 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.6 1.6 0 0 0-.3 1.8v0a1.6 1.6 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.6 1.6 0 0 0-1.5 1z"/>'};
+const T=[['home','Главная'],['rev','Отзывы'],['ord','Заказы'],['prof','Профиль'],['adm','Админ']];
+let tab='home',game=null,sub=null,prod=null,tgq=650,admin=true,admGame=null,lang='ru';
+const $=s=>document.querySelector(s),V=$('#view');
+function toast(t){const e=document.createElement('div');e.className='toast';e.textContent=t;document.body.appendChild(e);setTimeout(()=>e.remove(),2200)}
+function go(t){tab=t;game=sub=prod=admGame=null;render()}
+function nav(){const list=T.filter(([k])=>k!=='adm'||admin);
+ $('#nav').innerHTML=list.map(([k,l])=>`<button class="${tab===k?'on':''}" data-t="${k}"><svg viewBox="0 0 24 24">${ICONS[k]}</svg>${l}${k==='ord'?'<b>1</b>':''}</button>`).join('');
+ document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>go(b.dataset.t));$('#chipAdmin').style.display=admin?'':'none'}
+function gcard(g){return `<button class="game" data-g="${g.id}"><div class="cover" style="background:${g.bg};${bgi('c:'+g.id)}"></div><div class="gb"><b>${g.n}</b><small>${g.s}</small><div class="p"><span>от ${minP(g)} сом</span><span style="color:var(--mut)">Купить ›</span></div></div></button>`}
+function home(){
+ if(prod)return checkout();
+ if(game)return game.id==='tg'&&sub==='Stars'?tgPage():game.id==='st'?steamPage():gamePage();
+ const av=IM.avatar;
+ V.innerHTML=`<div class="row" style="justify-content:flex-start;gap:14px;margin-bottom:14px"><div class="avatar" id="av" style="${av?`background-image:url(${av})`:''}">${av?'':'N'}${admin?'<span class="cam">📷</span>':''}</div><div><h1 class="gold">Nurtilek Shop</h1><div class="sub" style="margin:0">Донаты в игры • Кыргызстан 🇰🇬</div></div></div>
+ <div class="hero"><span class="tag">⚡ Моментальное начисление</span><h2 class="gold">Free Fire: алмазы за минуты</h2><p class="sub">Оплата в сомах через MBank, О!Деньги, Bakai24. Мгновенная выдача по ID!</p><button class="btn" data-g="ff">Купить алмазы Free Fire</button></div>
+ <div class="mini"><div><b>1–3 мин</b><span>Выдача на ID</span></div><div><b>Банк / QR</b><span>MBank, O!Деньги</span></div><div><b>100% Кепилдик</b><span>Безопасно</span></div></div>
+ <input id="q" placeholder="🔍 Поиск игры или услуги…" style="margin-bottom:14px">
+ <div class="row" style="margin-bottom:10px"><h2>Выберите игру</h2><span class="sub" style="margin:0" id="cnt">${G.length} игр</span></div>
+ <div class="grid" id="gl">${G.map(gcard).join('')}</div>`;
+ if(admin)$('#av').onclick=()=>pick('avatar',home);
+ bindG();$('#q').oninput=e=>{const v=e.target.value.toLowerCase(),l=G.filter(g=>(g.n+g.s).toLowerCase().includes(v));$('#gl').innerHTML=l.map(gcard).join('');$('#cnt').textContent=l.length+' игр';bindG()}}
+function bindG(){document.querySelectorAll('[data-g]').forEach(b=>b.onclick=()=>{game=G.find(g=>g.id===b.dataset.g);sub=Object.keys(game.items)[0];render()})}
+function gamePage(){
+ const keys=Object.keys(game.items);
+ V.innerHTML=`<div class="row" style="justify-content:flex-start;gap:14px;margin-bottom:12px"><button class="ghost" id="back">← Назад</button><h2>${game.n}</h2></div>
+ <div class="cover lg" style="background:${game.bg};${bgi('c:'+game.id)}"><div><div>${game.n}</div><div style="font:13px var(--sans);color:var(--mut)">${game.s}</div></div></div>
+ <div class="pills">${keys.map(k=>`<button class="pill ${k===sub?'on':''}" data-s="${k}">${k}</button>`).join('')}</div>
+ <div class="grid">${game.items[sub].map((p,i)=>`<button class="item" data-i="${i}"><div class="pimg" style="${bgi(pk(game,p))}">${IM[pk(game,p)]?'':game.ic||'💎'}</div><div class="old">${p[2]?p[2]+' сом':''}</div><div class="nm">${p[0]}</div><div class="ft"><b>${p[1]} сом</b><span class="buy">Купить</span></div></button>`).join('')}</div>`;
+ $('#back').onclick=()=>{game=null;render()};
+ document.querySelectorAll('[data-s]').forEach(b=>b.onclick=()=>{sub=b.dataset.s;render()});
+ document.querySelectorAll('[data-i]').forEach(b=>b.onclick=()=>{prod=game.items[sub][b.dataset.i];render()})}
+
+/* ---- Telegram Stars page ---- */
+const tgPrice=q=>Math.round(q*TG_RATE);
+function tgPage(){
+ const q=tgq,pr=tgPrice(q),ik='tgstar';
+ V.innerHTML=`<div class="row" style="justify-content:flex-start;gap:14px;margin-bottom:12px"><button class="ghost" id="back">← Назад</button><h2>Telegram Stars ⭐</h2></div>
+ <div class="tgbox"><div class="tgico" style="${bgi(ik)}">${IM[ik]?'':'⭐'}</div><h2 class="gold">Пополнение Telegram Stars</h2><p class="sub" style="margin:8px 0 0">Официальные звёзды для каналов, ботов и мини-аппов. Начисление сразу по @username.</p><div class="rate">Курс: <b>1 звезда = ${TG_RATE} сом</b></div>${admin?'<div style="margin-top:12px"><button class="ghost" id="tgup">📷 Загрузить иконку</button></div>':''}</div>
+ <div class="card"><div class="row" style="margin-bottom:6px"><b>Количество звёзд</b><span class="gold" style="font-size:26px" id="qv">${q} ✦</span></div>
+ <input type="range" id="rg" min="${TG_MIN}" max="${TG_MAX}" step="1" value="${q}">
+ <div class="row sub" style="margin:4px 0 0"><span>мин. ${TG_MIN} ⭐</span><span>макс. ${TG_MAX} ⭐</span></div>
+ <div class="pre">${[50,100,250,500,1000,2500].map(n=>`<button data-n="${n}" class="${n===q?'on':''}">${n} ⭐</button>`).join('')}</div>
+ <div class="sub" style="margin:0 0 8px">Или введите точное число:</div><input id="ex" inputmode="numeric" value="${q}"></div>
+ <div class="card"><label for="un">Telegram Username получателя *</label><input id="un" placeholder="@username (например @durov)"><p class="sub" style="margin:10px 0 0;font-size:13px">Убедитесь, что аккаунт открыт для получения подарков и звезд в настройках конфиденциальности.</p></div>
+ <div class="card"><div class="row"><b>🏷 Промокод на скидку</b><button class="ghost" id="pt" style="border:0">У меня есть промокод</button></div><div id="pb" hidden style="margin-top:10px"><input id="pc" placeholder="NURTILEK10"></div></div>
+ <div class="card"><div class="row sub" style="margin:0 0 10px"><span>Цена за ${q} ⭐</span><span style="color:var(--fg)" id="p0">${pr} сом</span></div><div class="row" style="border-top:1px solid var(--line);padding:10px 0 14px"><b>Итого к оплате:</b><span class="gold" style="font-size:22px" id="tot">${pr} сом</span></div><button class="btn big" id="pay">Оплатить ${pr} сом (Finik QR / Карта)</button></div>`;
+ let disc=false;
+ const upd=()=>{const p=tgPrice(tgq),c=disc?Math.round(p*.9):p;$('#qv').textContent=tgq+' ✦';$('#p0').textContent=p+' сом';$('#tot').textContent=c+' сом';$('#pay').textContent=`Оплатить ${c} сом (Finik QR / Карта)`;document.querySelectorAll('.pre button').forEach(b=>b.classList.toggle('on',+b.dataset.n===tgq))};
+ const setQ=(n,skip)=>{n=Math.max(TG_MIN,Math.min(TG_MAX,Math.round(+n)||TG_MIN));tgq=n;$('#rg').value=n;if(skip!=='ex')$('#ex').value=n;upd()};
+ $('#back').onclick=()=>{game=null;render()};
+ $('#rg').oninput=e=>setQ(e.target.value);
+ $('#ex').oninput=e=>{const n=+e.target.value;if(n>=TG_MIN&&n<=TG_MAX)setQ(n,'ex')};
+ $('#ex').onchange=e=>setQ(e.target.value);
+ document.querySelectorAll('.pre button').forEach(b=>b.onclick=()=>setQ(b.dataset.n));
+ $('#pt').onclick=()=>{$('#pb').hidden=!$('#pb').hidden};
+ $('#pc').oninput=e=>{disc=e.target.value.trim().toUpperCase()==='NURTILEK10';upd()};
+ if(admin)$('#tgup').onclick=()=>pick(ik,tgPage);
+ $('#pay').onclick=()=>{const u=$('#un').value.trim();if(!/^@?[A-Za-z0-9_]{5,32}$/.test(u)){toast('Введите корректный @username');$('#un').focus();return}
+  const c=disc?Math.round(tgPrice(tgq)*.9):tgPrice(tgq);
+  orders.unshift({no:1043+orders.length-4,g:'Telegram Stars: '+tgq+' ⭐',d:'Username: '+(u[0]==='@'?u:'@'+u),p:c,st:'wait'});toast('Демо: заказ создан');game=null;tab='ord';render()}}
+
+function steamPage(){
+ const rate=steamRate(),tot=Math.round(steamAmt*rate*100)/100;
+ V.innerHTML=`<div class="row" style="justify-content:flex-start;gap:14px;margin-bottom:12px"><button class="ghost" id="back">← Назад</button><h2>Steam</h2></div>
+ <div class="cover lg" style="background:${game.bg};${bgi('c:'+game.id)}"><div><div>Steam</div><div style="font:13px var(--sans);color:var(--mut)">${game.s}</div></div></div>
+ <div class="card"><div class="row"><b>Сумма пополнения</b><span class="gold" style="font-size:26px" id="sv">$${steamAmt}</span></div><div class="rate" style="margin:8px 0 0">Курс: <b>${rate} сом за $1</b></div>
+ <div class="pre">${[1,2,3,5,10,15].map(n=>`<button data-n="${n}" class="${n===steamAmt?'on':''}">$${n}</button>`).join('')}</div>
+ <div class="sub" style="margin:0 0 8px">Или своя сумма (от $${ST_MIN} до $${ST_MAX}):</div><input id="sx" inputmode="decimal" value="${steamAmt}"></div>
+ <div class="card"><label for="un">Логин Steam (account name) *</label><input id="un" placeholder="Введите логин Steam"></div>
+ <div class="card"><div class="row sub" style="margin:0 0 10px"><span>Скидки на Steam не действуют</span><span id="p0" style="color:var(--fg)">$${steamAmt} × ${rate}</span></div><div class="row" style="border-top:1px solid var(--line);padding:10px 0 14px"><b>Итого к оплате:</b><span class="gold" style="font-size:22px" id="tot">${tot} сом</span></div><button class="btn big" id="pay">Оплатить ${tot} сом (Finik QR / Карта)</button></div>`;
+ const upd=()=>{const t=Math.round(steamAmt*rate*100)/100;$('#sv').textContent='$'+steamAmt;$('#p0').textContent='$'+steamAmt+' × '+rate;$('#tot').textContent=t+' сом';$('#pay').textContent=`Оплатить ${t} сом (Finik QR / Карта)`;document.querySelectorAll('.pre button').forEach(b=>b.classList.toggle('on',+b.dataset.n===steamAmt))};
+ $('#back').onclick=()=>{game=null;render()};
+ document.querySelectorAll('.pre button').forEach(b=>b.onclick=()=>{steamAmt=+b.dataset.n;$('#sx').value=steamAmt;upd()});
+ $('#sx').oninput=e=>{const v=e.target.value.replace(',','.');if(/^\d+(\.\d{1,2})?$/.test(v)&&+v>=ST_MIN&&+v<=ST_MAX){steamAmt=+v;upd()}};
+ $('#pay').onclick=()=>{const u=$('#un').value.trim();
+  if(!(steamAmt>=ST_MIN&&steamAmt<=ST_MAX)){toast(`Сумма от $${ST_MIN} до $${ST_MAX}`);return}
+  if(u.length<2||/\s/.test(u)){toast('Введите логин Steam без пробелов');$('#un').focus();return}
+  const t=Math.round(steamAmt*rate*100)/100;
+  orders.unshift({no:1043+orders.length-4,g:'Steam $'+steamAmt,d:'Логин: '+u,p:t,st:'wait'});toast('Демо: заказ создан');game=null;tab='ord';render()}}
+function checkout(){
+ const price=prod[1],k=pk(game,prod),f=game.f||'uid';srv=null;
+ const F={
+  uid:`<label for="uid">${game.lbl||'ID Игрока (Player ID / UID) *'}</label><input id="uid" inputmode="numeric" placeholder="Введите ID">`,
+  ml:`<label for="uid">Player ID *</label><input id="uid" inputmode="numeric" placeholder="Player ID"><label for="sid" style="margin-top:12px">Server ID *</label><input id="sid" inputmode="numeric" placeholder="Server ID">`,
+  srv:`<label for="uid">UID *</label><input id="uid" inputmode="numeric" placeholder="UID"><label style="margin-top:12px">Сервер *</label><div class="pills" style="margin:0">${SRV.map(x=>`<button class="pill" data-v="${x}">${x}</button>`).join('')}</div>`,
+  tgu:`<label for="uid">Telegram Username получателя *</label><input id="uid" placeholder="@username"><p class="sub" style="margin:10px 0 0;font-size:13px">Аккаунт должен быть открыт для получения подарков в настройках конфиденциальности.</p>`,
+  none:`<b>🔑 ID не нужен</b><p class="sub" style="margin:6px 0 0">Код придёт в чат с ботом сразу после оплаты.</p>`}[f];
+ const warn=sub==='Пропуска'&&game.id==='ff'?`<div class="card"><b>⚠️ Важно</b><p class="sub" style="margin:6px 0 0">Если вы ранее покупали этот пакет, на ваш аккаунт второй раз он не придёт. Если не покупали — смело покупайте. Если пакет недоступен, заказ не выполнится, а деньги вернутся на кошелёк.</p></div>`:'';
+ const note=prod[3]?`<div class="card"><b>${prod[0]}</b><p class="sub" style="margin:6px 0 0">${prod[3]}</p></div>`:'';
+ V.innerHTML=`<div class="row" style="justify-content:flex-start;gap:14px;margin-bottom:12px"><button class="ghost" id="back">← Назад</button><h2>${game.n}</h2></div>
+ <div class="cover lg" style="background:${game.bg};${bgi(k)||bgi('c:'+game.id)};align-items:flex-end;justify-content:space-between"><div style="text-shadow:0 2px 8px #000"><small style="font:12px var(--sans);letter-spacing:1px">${game.n.toUpperCase()}</small><div>${prod[0]}</div></div><div class="gold" style="text-shadow:0 2px 8px #000" id="pr">${price} сом</div></div>
+ <div class="card"><b class="gold" style="font-family:var(--sans);font-size:14px">🛡 Официальная выдача Nurtilek Shop</b><p class="sub" style="margin:6px 0 0">Товар выдаётся сразу после подтверждения оплаты. Внимательно проверьте данные перед оплатой.</p></div>
+ ${note}${warn}
+ <div class="card">${F}</div>
+ <div class="card"><div class="row"><b>🏷 Промокод на скидку</b><button class="ghost" id="pt" style="border:0">У меня есть промокод</button></div><div id="pb" hidden style="margin-top:10px"><input id="pc" placeholder="NURTILEK10"></div></div>
+ <div class="card"><div class="row sub" style="margin:0 0 10px"><span>Цена товара</span><span style="color:var(--fg)">${price} сом</span></div><div class="row" style="border-top:1px solid var(--line);padding:10px 0 14px"><b>Итого к оплате:</b><span class="gold" style="font-size:22px" id="tot">${price} сом</span></div><button class="btn big" id="pay">Оплатить ${price} сом (Finik QR / Карта)</button></div>`;
+ let cur=price;
+ $('#back').onclick=()=>{prod=null;render()};
+ $('#pt').onclick=()=>{$('#pb').hidden=!$('#pb').hidden};
+ document.querySelectorAll('[data-v]').forEach(b=>b.onclick=()=>{srv=b.dataset.v;document.querySelectorAll('[data-v]').forEach(x=>x.classList.toggle('on',x===b))});
+ $('#pc').oninput=e=>{cur=e.target.value.trim().toUpperCase()==='NURTILEK10'?Math.round(price*.9):price;$('#tot').textContent=cur+' сом';$('#pr').textContent=cur+' сом';$('#pay').textContent=`Оплатить ${cur} сом (Finik QR / Карта)`};
+ $('#pay').onclick=()=>{let d='Код придёт в чат бота';
+  if(f!=='none'){const u=$('#uid').value.trim();
+   if(f==='tgu'){if(!/^@?[A-Za-z0-9_]{5,32}$/.test(u)){toast('Введите корректный @username');$('#uid').focus();return}d='Username: '+(u[0]==='@'?u:'@'+u)}
+   else{if(u.length<2){toast('Введите игровой ID');$('#uid').focus();return}
+    if(f==='ml'){const sv=$('#sid').value.trim();if(!sv){toast('Введите Server ID');$('#sid').focus();return}d='Player ID: '+u+'  Server ID: '+sv}
+    else if(f==='srv'){if(!srv){toast('Выберите сервер');return}d='UID: '+u+'  Сервер: '+srv}
+    else d='UID: '+u}}
+  orders.unshift({no:1043+orders.length-4,g:game.n+': '+prod[0],d,p:cur,st:'wait'});toast('Демо: заказ создан');prod=null;game=null;tab='ord';render()}}
+function ordersV(){V.innerHTML=`<h1>Мои заказы</h1><p class="sub">История ваших покупок и статус начисления товаров</p>`+orders.map(o=>`<div class="card"><div class="row"><b class="gold" style="font-size:20px">№ ${o.no}</b><span class="badge ${o.st==='ok'?'b-ok':'b-wait'}">${o.st==='ok'?'✓ Выполнен':'◷ В обработке'}</span></div><p style="font-weight:500;margin:12px 0 4px">${o.g}</p><div class="mono" style="color:var(--mut);font-size:13px">${o.d}</div><div class="row" style="border-top:1px solid var(--line);margin-top:12px;padding-top:12px"><b style="font-size:17px">${o.p} сом</b>${o.st!=='ok'?'<span class="sub" style="margin:0">Ожидайте начисления</span>':o.rv?'<span class="sub" style="margin:0">Отзыв оставлен ✓</span>':'<button class="ghost" data-r>★ Оставить отзыв</button>'}</div></div>`).join('');
+ document.querySelectorAll('[data-r]').forEach(b=>b.onclick=()=>toast('Спасибо! Отзыв отправлен (демо)'))}
+function revV(){V.innerHTML=`<div class="row"><h1>Отзывы покупателей</h1><div style="text-align:right"><div class="gold" style="font-size:22px">5.0 ★</div><small class="sub">${reviews.length} отзыва</small></div></div><p class="sub">Реальные отзывы игроков Nurtilek Shop</p>
+ <div class="card row"><div><b>Купили товар?</b><div class="sub" style="margin:0">Оставьте отзыв в разделе «Заказы»</div></div><button class="ghost" id="toO">К заказам</button></div>`+
+ reviews.map((r,i)=>`<div class="card"><div class="row"><div><b style="font-size:17px">${r[0]}</b> <span class="badge b-ok" style="font-size:11px;padding:2px 8px">Покупка подтверждена</span></div><span class="stars">★★★★★</span></div><div class="sub" style="margin:4px 0 10px;font-size:12px">${r[1]} • ${r[2]} • ${r[3]}</div><p style="margin:0 0 10px">${r[4]}</p>${admin?`<div style="border-top:1px solid var(--line);padding-top:10px;text-align:right"><button data-d="${i}" style="background:none;border:0;color:var(--bad);cursor:pointer;font:13px var(--sans)">🗑 Удалить отзыв (Админ)</button></div>`:''}</div>`).join('');
+ $('#toO').onclick=()=>go('ord');
+ document.querySelectorAll('[data-d]').forEach(b=>b.onclick=()=>{reviews.splice(+b.dataset.d,1);revV()})}
+function profV(){V.innerHTML=`<h1>Профиль пользователя</h1><p class="sub">Ваш аккаунт Nurtilek Shop и реферальная программа</p>
+ <div class="card row"><div class="row" style="justify-content:flex-start;gap:14px"><div style="width:44px;height:44px;border:1px solid var(--gold2);border-radius:50%;display:grid;place-items:center;font:700 20px var(--serif);color:var(--gold)">Н</div><div><b>Нурлан</b><div class="sub" style="margin:0">ID 482910376</div></div></div><span class="badge b-ok">☺ Клиент</span></div>
+ <div class="card row sub" style="margin-bottom:12px"><span>Всего куплено товаров:</span><span class="gold" style="font-size:20px">4 850 сом</span></div>
+ <div class="card"><div class="row"><b>Реферальная программа</b><span class="gold" style="font-family:var(--sans);font-size:14px">Заработано: 245 сом</span></div><p class="sub">Приглашайте друзей! Вы будете получать процент от каждой их покупки в Nurtilek Shop.</p><div class="row" style="background:#0b0a08;border:1px solid var(--line);border-radius:12px;padding:10px"><span class="mono" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">https://t.me/nurtilek_bot?start=…</span><button class="btn" id="cp" style="padding:8px 12px">Копия</button></div></div>
+ <div class="card row"><b>🌐 Язык приложения</b><div class="pills" style="margin:0"><button class="pill ${lang==='ru'?'on':''}" data-l="ru">Русский</button><button class="pill ${lang==='ky'?'on':''}" data-l="ky">Кыргызча</button></div></div>
+ <div class="card row">Наш официальный Telegram канал <span>↗</span></div>
+ <div class="card row">Служба поддержки 24/7 (@nurt1lek_ff) <span>↗</span></div>
+ <button class="ghost" style="width:100%;padding:14px" id="exa">${admin?'🛡 Выйти из режима админа (демо)':'🛡 Войти как админ (демо)'}</button>`;
+ $('#cp').onclick=()=>{try{navigator.clipboard.writeText('https://t.me/nurtilek_bot?start=ref')}catch(e){}toast('Ссылка скопирована')};
+ document.querySelectorAll('[data-l]').forEach(b=>b.onclick=()=>{lang=b.dataset.l;profV()});
+ $('#exa').onclick=()=>{admin=!admin;nav();profV()}}
+
+/* ---- Admin ---- */
+function admV(){
+ if(!admin){V.innerHTML='<div class="card">Режим админа выключен. Включите его в профиле.</div>';return}
+ let h=`<h1 style="display:inline">Админ-панель</h1> <span class="chip">ROOT</span><div class="sub" style="margin:6px 0 14px">Фото товаров, обложки игр, аватарка магазина и цены</div>`;
+ if(!admGame){
+  h+=`<div class="card adm"><div class="avatar" id="aav" style="width:52px;height:52px;font-size:22px;${IM.avatar?`background-image:url(${IM.avatar})`:''}">${IM.avatar?'':'N'}</div><div style="flex:1"><b>Аватарка магазина</b><div class="sub" style="margin:0">Показывается на главной слева от названия</div></div><button class="ghost" id="avup">📷 Фото</button></div>
+  <p class="sub">Выберите игру, чтобы загрузить обложку и фото для каждого товара:</p>`+
+  G.map(g=>`<div class="card adm"><div class="thumb" style="background:${g.bg};${bgi('c:'+g.id)};border-style:solid"></div><div style="flex:1"><b>${g.n}</b><div class="sub" style="margin:0">${Object.values(g.items).flat().length+(g.id==='tg'?' товаров + Stars':' товаров')}</div></div><button class="ghost" style="border:0" data-a="${g.id}">Настроить ›</button></div>`).join('')}
+ else{const g=admGame;
+  h+=`<div class="row" style="margin-bottom:12px"><button class="ghost" style="border:0" id="ab">‹ Назад к списку игр</button><h2>${g.n}</h2></div>
+  <div class="card"><b>Обложка раздела игры</b><div class="cover lg" style="background:${g.bg};${bgi('c:'+g.id)};margin:10px 0;height:110px"></div><div class="row"><button class="ghost" style="flex:1" id="cu">📷 Загрузить фото</button>${IM['c:'+g.id]?'<button class="ghost" id="cd" style="color:var(--bad);border-color:var(--bad)">🗑</button>':''}</div></div>`;
+  if(g.id==='tg')h+=`<div class="card adm"><div class="thumb" style="${bgi('tgstar')}" id="tu">${IM.tgstar?'':'📷'}</div><div style="flex:1"><b>Иконка Telegram Stars</b><div class="sub" style="margin:0">Круглая картинка на странице Stars</div></div>${IM.tgstar?'<button class="ghost" id="td" style="color:var(--bad);border-color:var(--bad)">🗑</button>':''}</div>`;
+  h+=Object.entries(g.items).filter(([k,l])=>l.length).map(([k,l])=>`<div class="sub" style="letter-spacing:1px;text-transform:uppercase;color:var(--gold)">${k}</div>`+l.map((p,i)=>{const key=pk(g,p);return `<div class="card adm"><div class="thumb" style="${bgi(key)}" data-u="${key}">${IM[key]?'':'📷'}</div><div style="flex:1"><b>${p[0]}</b>${IM[key]?`<div><button data-x="${key}" style="background:none;border:0;color:var(--bad);padding:2px 0;font:12px var(--sans);cursor:pointer">🗑 убрать фото</button></div>`:'<div class="sub" style="margin:0;font-size:12px">Нажмите на квадрат — загрузить фото</div>'}</div><input type="number" value="${p[1]}" inputmode="numeric" style="width:84px;text-align:right" data-k="${k}" data-i="${i}" aria-label="Цена"></div>`}).join('')).join('')}
+ V.innerHTML=h;
+ const re=()=>admV();
+ document.querySelectorAll('[data-a]').forEach(b=>b.onclick=()=>{admGame=G.find(g=>g.id===b.dataset.a);admV()});
+ const q=(s,f)=>{const e=$(s);if(e)e.onclick=f};
+ q('#ab',()=>{admGame=null;admV()});q('#avup',()=>pick('avatar',re));
+ if(admGame){const g=admGame;q('#cu',()=>pick('c:'+g.id,re));q('#cd',()=>delImg('c:'+g.id,re));q('#tu',()=>pick('tgstar',re));q('#td',()=>delImg('tgstar',re))}
+ document.querySelectorAll('[data-u]').forEach(b=>b.onclick=()=>pick(b.dataset.u,re));
+ document.querySelectorAll('[data-x]').forEach(b=>b.onclick=()=>delImg(b.dataset.x,re));
+ document.querySelectorAll('[data-k]').forEach(inp=>inp.onchange=()=>{const v=+inp.value;if(v>0){admGame.items[inp.dataset.k][inp.dataset.i][1]=v;toast('Цена сохранена (демо)')}})}
+function render(){nav();
+ if(tab==='home')home();else if(tab==='ord')ordersV();else if(tab==='rev')revV();else if(tab==='prof')profV();else if(tab==='adm')admV();
+ V.scrollTop=0}
+render();
+</script></body></html>
